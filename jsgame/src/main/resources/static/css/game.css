@@ -3,7 +3,7 @@
 * {	margin: 0px; padding: 0px; border: 0px none; font-family: Verdana, Georgia; text-align: center; } 
 html, body { height: 100%; width: 100%;}
 
-#canvas { background-color: #FFCC00; width: 100%; position: relative; overflow: hidden;
+#canvas { background-color: #FFCC00; width: 100%; position: relative; overflow: hidden; 
 }
 .score {
 	background-color: #FFDEAD;
@@ -24,6 +24,13 @@ html, body { height: 100%; width: 100%;}
 .lbl {	
 	font-size: small; 
 }
-.block {
-	
+#robot {
+	position: absolute; background-image: url('../tanks.png');
 }
+.block { position: absolute; border-radius: 5px; background-color: #FFDEAD; font-size: 1em;
+}
+.block.type { background-color: #FFDEAD; }
+.block.speed { background-color: #FFFFFF; }
+.block.power { background-color: #009933; }
+.block.bomb { background-color: #CDCDCD; }
+.block.bombpower { background-color: #333333; color: #FFFFFF; }

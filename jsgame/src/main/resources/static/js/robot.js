@@ -1,5 +1,5 @@
 var doNothing = function() {};
-function robo(config) {
+function robot(config) {
 	this.gameFncs = config.gameFncs || { addBullet : doNothing, 
 										finishBullet : doNothing, 
 										destroyRobot : doNothig,
@@ -19,13 +19,12 @@ function robo(config) {
 	this.init();
 }
 
-robo.prototype = {
+robot.prototype = {
 	init : function() {
 		this.dom = document.createElement("DIV");
-		this.dom.style.backgroundImage = "url(tanks.png)";
+		this.dom.id = "robot";
 		this.redrawType(this.typeAmmo);
 		this.top = Math.floor(this.top - (this.height/2));
-		this.dom.style.position = "absolute";
 		this.dom.style.left = this.left + "px";
 		this.dom.style.top = this.top + "px";
 		this.dom.style.width = this.width + 'px';
@@ -81,21 +80,23 @@ robo.prototype = {
 			console.log(e.key, e.keyCode, e);
 			that.shoot();
 		});
-		document.addEventListener("mousemove", function robotBind(e) {
-			
-			var pos = Math.floor(that.top + (that.height/2));
-			if (e.pageY > pos+5) {
-				that.goDown();
-			} else if (e.pageY < pos-5) {
-				that.goUp();
-			}
-			
+		document.addEventListener("mousemove", function robotMouseMoveBind(e) {
+			var top = e.pageY - that.canvas.offsetTop;
+			if (that.top > that.canvas.offsetHeight - that.height) {
+				top = that.canvas.offsetHeight - that.height;
+			} 
+			else if (that.top < 0) {
+				top = 0;
+			}  
+			that.top = top;
+			that.dom.style.top = that.top + "px";
 		});
 	},
 	unBind : function() {
 		document.removeEventListener("keypress", function robotBind(e) {});
 		document.removeEventListener("keydown", function robotBind(e) {});
 		document.removeEventListener("mousedown", function robotBind(e) {});
+		document.removeEventListener("mousemove", function robotMouseMoveBind(e) {});
 	},
 	goDown : function() {
 		var inc = 10 * this.speed;

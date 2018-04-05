@@ -1,4 +1,4 @@
-dynamicallyLoadScript("js/robo.js");
+dynamicallyLoadScript("js/robot.js");
 dynamicallyLoadScript("js/block.js");
 dynamicallyLoadScript("js/bullet.js");
 
@@ -14,7 +14,7 @@ function game(config) {
 	this.slots = 7;
 	this.timmer = null;
 	this.timmerCheckHits = null;
-	this.robo = null;
+	this.robot = null;
 	this.bullets = {};
 	this.blocks = {};
 	this.init();
@@ -91,7 +91,7 @@ game.prototype = {
 	start : function() {
 		var that = this;
 		try {
-			this.robo = new robo({
+			this.robot = new robot({
 				canvas : that.canvas,
 				speed : that.speed,
 				gameFncs : { 
@@ -125,7 +125,7 @@ game.prototype = {
 								that.blocks[bId].hit(bombPower);
 							});
 						}
-						that.scoreBombs.innerHTML = that.robo.bombs;
+						that.scoreBombs.innerHTML = that.robot.bombs;
 						window.setTimeout(function() {
 							that.canvas.style.backgroundColor = '#FFCC00';	
 						}, 50);
@@ -142,14 +142,14 @@ game.prototype = {
 		} catch(err) {
 			console.log("Error when start game", err);
 		}
-		if (!this.robo) {
+		if (!this.robot) {
 			this.load();
 		} else {
 			console.log("game started");
-			this.scoreSpeed.innerHTML = this.robo.speed;
-			this.scorePower.innerHTML = this.robo.shootPower;
-			this.scoreBombPower.innerHTML = this.robo.bombPower;
-			this.scoreBombs.innerHTML = this.robo.bombs;
+			this.scoreSpeed.innerHTML = this.robot.speed;
+			this.scorePower.innerHTML = this.robot.shootPower;
+			this.scoreBombPower.innerHTML = this.robot.bombPower;
+			this.scoreBombs.innerHTML = this.robot.bombs;
 			this.scorePoints.innerHTML = 0;
 			this.timmer = window.setInterval(this.cicles.bind(that), 500);
 			this.timmerCheckHits = window.setInterval(this.checkHits.bind(that), 50);
@@ -179,26 +179,26 @@ game.prototype = {
 				var prize = block.getPrize();
 				if (prize) { //{power: 0, speed: 0, bomb: 0, bombPower : 0, typeAmmo: 0}
 					if (prize.typeAmmo && prize.typeAmmo > 0) {
-						that.robo.changeType(prize.typeAmmo);
+						that.robot.changeType(prize.typeAmmo);
 						window.setTimeout(function() { 
-							that.robo.changeType(1);
+							that.robot.changeType(1);
 						}, 10000);
 					} 
 					else if (prize.speed && prize.speed > 0) {
-						that.robo.speed += prize.speed;
-						that.scoreSpeed.innerHTML = that.robo.speed;
+						that.robot.speed += prize.speed;
+						that.scoreSpeed.innerHTML = that.robot.speed;
 					}
 					else if (prize.power && prize.power > 0) {
-						that.robo.shootPower += prize.power;
-						that.scorePower.innerHTML = that.robo.shootPower;
+						that.robot.shootPower += prize.power;
+						that.scorePower.innerHTML = that.robot.shootPower;
 					}
 					else if (prize.bomb && prize.bomb > 0) {
-						that.robo.bombs += prize.bomb;
-						that.scoreBombs.innerHTML = that.robo.bombs;
+						that.robot.bombs += prize.bomb;
+						that.scoreBombs.innerHTML = that.robot.bombs;
 					}
 					else if (prize.bombPower && prize.bombPower > 0) {
-						that.robo.bombPower += prize.bombPower;
-						that.scoreBombPower.innerHTML = that.robo.bombPower;
+						that.robot.bombPower += prize.bombPower;
+						that.scoreBombPower.innerHTML = that.robot.bombPower;
 					}
 				}
 				that.scorePoints.innerHTML = parseInt(that.scorePoints.innerText, 10) + block.getInitialPower();
@@ -208,12 +208,12 @@ game.prototype = {
 			canvas : that.canvas,
 			gameFncs : { finishBlock, finishBlock },
 			speed : that.speed,
-			power : Math.floor((Math.random() * (that.robo.getShootPower() * 20)) + 1),
+			power : Math.floor((Math.random() * (that.robot.getShootPower() * 20)) + 1),
 			height : Math.floor(that.canvas.offsetHeight/that.slots),
 			width : Math.floor(that.canvas.offsetHeight/that.slots),
 			left : that.canvas.offsetWidth + 1,
 			top : that.getNextBlockTop(),
-			maxPower : that.robo.getShootPower() * 20,
+			maxPower : that.robot.getShootPower() * 20,
 			prize : blockPrize
 		});
 		this.blocks[block.id] = block;
@@ -240,9 +240,9 @@ game.prototype = {
 			this.addBlock({power: 0, speed: 0, bomb: 0, typeAmmo: Math.floor((Math.random() * 3) + 1), bombPower : 0});
 			
 		} else if (n < 13) { // prize bombpower
-			this.addBlock({power: 0, speed: 0, bomb: 0, typeAmmo: 0, bombPower : this.robo.shootPower});
+			this.addBlock({power: 0, speed: 0, bomb: 0, typeAmmo: 0, bombPower : this.robot.shootPower});
 		
-		} else if (n < 25 + this.robo.bombPower + this.robo.shootPower + this.robo.speed) { //block
+		} else if (n < 25 + this.robot.bombPower + this.robot.shootPower + this.robot.speed) { //block
 			this.addBlock();
 			
 		} else { //nothing
@@ -262,7 +262,7 @@ game.prototype = {
 			Object.keys(this.blocks).map(function(bId) {
 				var block = that.blocks[bId];
 				try {
-					that.robo.hit(block);
+					that.robot.hit(block);
 					block.hit(0);
 				} catch(err) {}
 			});

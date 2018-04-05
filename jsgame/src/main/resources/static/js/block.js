@@ -20,17 +20,33 @@ blockr.prototype = {
 	init : function(config) {
 		this.dom = document.createElement("DIV");
 		this.dom.id = "BLK-" + this.id;
-		this.dom.className = "block";
-		this.dom.style.position = "absolute";
+		this.dom.className = this.getClass();
 		this.dom.style.top = this.top + "px";
 		this.dom.style.left = this.left + "px";
 		this.dom.style.width = this.width + "px";
 		this.dom.style.height = this.height + "px";
-		this.dom.style.borderRadius = "5px";
-		this.dom.style.backgroundColor = this.getBlockCollor();
 		this.canvas.appendChild(this.dom);
 		this.dom.innerHTML = this.getLabel();
 		this.go();
+	},
+	getClass: function() {
+		var className = "block";
+		if (this.prize.typeAmmo && this.prize.typeAmmo > 0) {
+			className += " type";
+		} 
+		else if (this.prize.speed && this.prize.speed > 0) {
+			className += " speed";
+		}
+		else if (this.prize.power && this.prize.power > 0) {
+			className += " power";
+		}
+		else if (this.prize.bomb && this.prize.bomb > 0) {
+			className += " bomb";
+		}
+		else if (this.prize.bombPower && this.prize.bombPower > 0) {
+			className += " bombpower";
+		} 
+		return className;
 	},
 	getLabel : function() {
 		var label = "";
@@ -85,7 +101,7 @@ blockr.prototype = {
 			this.stop();
 			return;
 		}
-		this.dom.innerHTML = this.power;
+		this.dom.innerHTML = this.getLabel();
 	},
 	getTop : function() {
 		return this.top;
@@ -110,26 +126,5 @@ blockr.prototype = {
 	},
 	getPrize : function() {
 		return this.prize;
-	},
-	getBlockCollor : function() {
-		if (this.prize.speed) {
-			return "#FFFFFF";
-		}
-		if (this.prize.power) {
-			return "#009933";
-		}
-		if (this.prize.bomb) {
-			return "#CDCDCD";
-		}
-		if (this.prize.bombPower) {
-			return "#333333";
-		}
-//		if (this.maxPower * 0.7 < this.power) {
-//			return "#995c00";
-//		}
-//		if (this.maxPower * 0.4 < this.power) {
-//			return "#ffa31a";
-//		}
-		return "#FFDEAD";
 	}
 }
