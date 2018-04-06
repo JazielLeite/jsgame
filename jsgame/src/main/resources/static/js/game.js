@@ -114,9 +114,8 @@ game.prototype = {
 								that.bullets[bId].stop();
 							});
 						}
+						that.canvas.className = "gameover";
 						that.canvas.innerHTML = "GAME OVER";
-						that.canvas.style.color = "#FFFFFF";
-						that.canvas.style.backgroundColor = "#000000";
 					},
 					addBomb : function(bombPower) {
 						that.canvas.style.backgroundColor = "#FF0000";
@@ -153,6 +152,21 @@ game.prototype = {
 			this.scorePoints.innerHTML = 0;
 			this.timmer = window.setInterval(this.cicles.bind(that), 500);
 			this.timmerCheckHits = window.setInterval(this.checkHits.bind(that), 50);
+		}
+	},
+	pause : function() {
+		var that = this;
+		window.clearInterval(that.timmer);
+		window.clearInterval(that.timmerCheckHits);
+		if (that.bullets && Object.keys(that.bullets).length) {
+			Object.keys(that.bullets).map(function(bId) {
+				that.bullets[bId].pause();
+			});
+		}
+		if (that.blocks && Object.keys(that.blocks).length) {
+			Object.keys(that.blocks).map(function(bId) {
+				that.blocks[bId].pause();
+			});
 		}
 	},
 	getNextBlockTop : function() {

@@ -3,7 +3,11 @@
 * {	margin: 0px; padding: 0px; border: 0px none; font-family: Verdana, Georgia; text-align: center; } 
 html, body { height: 100%; width: 100%;}
 
-#canvas { background-color: #FFCC00; width: 100%; position: relative; overflow: hidden; 
+#canvas { background-color: #FFCC00; width: 100%; height: 90%; position: relative; overflow: hidden; }
+#canvas.gameover { background-color: #000000; color: #FFFFFF; font-size: 3em; padding: 40% 0 0 0; font-weight: bold; 
+	transition-timing-function: ease-out;
+    -webkit-transition: background-color 2s, font-size 4s; /* Safari */
+    transition: background-color 2s, font-size 4s;
 }
 .score {
 	background-color: #FFDEAD;
@@ -25,12 +29,15 @@ html, body { height: 100%; width: 100%;}
 	font-size: small; 
 }
 #robot {
-	position: absolute; background-image: url('../tanks.png');
+	position: absolute; background-image: url('../images/tanks.png');
 }
 .block { position: absolute; border-radius: 5px; background-color: #FFDEAD; font-size: 1em;
 }
-.block.type { background-color: #FFDEAD; }
-.block.speed { background-color: #FFFFFF; }
-.block.power { background-color: #009933; }
-.block.bomb { background-color: #CDCDCD; }
-.block.bombpower { background-color: #333333; color: #FFFFFF; }
+.block.type { background-color: #CFCFCF; }
+.block.speed { background: #FFFFFF url(../images/speed.png) no-repeat center 60%; border: 1px solid #404040; line-height: 1em; letter-spacing: 5px; font-weight: bold; color: #404040; }
+.block.power { background: #30b15b url(../images/power.png) no-repeat center center; color: #003300; font-weight: bolder; }
+.block.bomb { background: #CDCDCD url('../images/bomb.png') no-repeat center center; border: 2px solid #555555; text-align: right; padding: 2px 5px 0px 0px}
+.block.bombpower { 
+	background: #333333 url(../images/bombpower.png) no-repeat center center; color: #FFFFFF; font-weight: bolder;
+	
+	}

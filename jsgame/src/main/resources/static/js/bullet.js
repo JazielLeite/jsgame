@@ -44,6 +44,9 @@ bullet.prototype = {
 		window.clearInterval(this.timmer);
 		this.gameFncs.finishBullet(this);
 	},
+	pause : function() {
+		window.clearInterval(this.timmer);
+	},
 	hit : function(blocks) {
 		if (this.left >= this.canvas.offsetWidth) {
 			this.stop();

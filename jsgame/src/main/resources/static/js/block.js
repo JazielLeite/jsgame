@@ -88,6 +88,9 @@ blockr.prototype = {
 		this.dom.parentNode.removeChild(this.dom);
 		this.gameFncs.finishBlock(this);
 	}, 
+	pause : function() {
+		window.clearInterval(this.timmer);
+	},
 	hit : function(bulletPower) {
 		if (this.left + this.width < 0) {
 			this.stop();
